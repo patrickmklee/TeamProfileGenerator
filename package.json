@@ -1,0 +1,29 @@
+{
+  "name": "teamprofilegenerator",
+  "version": "1.0.0",
+  "description": "TeamProfileGenerator",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patrickmklee/TeamProfileGenerator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/patrickmklee/TeamProfileGenerator/issues"
+  },
+  "homepage": "https://github.com/patrickmklee/TeamProfileGenerator#readme",
+  "dependencies": {
+    "inquirer": "^7.3.3"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}
