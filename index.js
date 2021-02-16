@@ -70,19 +70,6 @@ const questions = [
     default: true
   },
 ];
-      // when: function(employee){
-      //    return (employee === 'Engineer');
-      // }
-//     {
-//       type: 'confirm',
-//       name: 'confirmAdd',
-//       message: 'Add another team member?',
-//       default: false,
-//     },
-    
-// ];
-// const teamProfile = new Team();
-// TODO: Create a function to write HTML file
 function writeToFile(fd, data) {
     var stream = fs.createWriteStream(fileName)
     stream.once('open', function(fd) {
@@ -102,43 +89,7 @@ function buildPage() {
     + '<html><head>' + header + '</head><body>' + body + '</body></html>';
 };
 // TODO: Create a function to initialize app
-// const promptEmployee = role => {
-//   inquirer.prompt()
-// }
-const promptAddNextEmployee = () => {
-  return inquirer.
-    prompt([{
-        type: 'confirm',
-        message: 'Add another employee to the team?',
-        name: 'addNextConfirm',
-        default: true
-      },
-      { type: 'list',
-        name: 'role',
-        message: 'Please select either an Engineer or Intern for your team',
-        choices: ['Engineer', 'Intern'],
-        //default: []
-        when: function() { return (addNextConfirm===true) }
-      },
-    ])
-    .then( (answers) => {
-        // teamData.push(answers);
-        console.log(answers);
-        if (!answers.addNextConfirm) {
-          return teamData;
-        } else {
-          
-          //if (answers.role === 'Engineer') {
-          let questionsList = genericQuestions.splice(genericQuestions.length, 0, roleQuestion[answers.role]);
-          console.log(questionsList);
-          teamProfile.promptAddNextEmployee();
-        }
-      });
-        //} else (answers.role === 'Intern') {
-    
-//        }
-        
-  };
+
   const teamProfile = new Team();
 
   function promptTeamMember(teamData) {
@@ -155,37 +106,7 @@ const promptAddNextEmployee = () => {
           }
         })
       }
-  //       .then(
-  //         {
-  //           type: 'confirm',
-  //           message: 'Add another employee to the team?',
-  //           name: 'addNextConfirm',
-  //           default: true
-  //         },
-  //       )
-  //     });
-  // }
-  //     [
-  //      { type: 'list',
-  //     name: 'role',
-  //     message: 'Please select either an Engineer or Intern for your team',
-  //     choices: ['engineer', 'intern'],
-  //       },
-  //     {
-  //       type: 'confirm',
-  //       message: 'Add another employee to the team?',
-  //       name: 'addNextConfirm',
-  //       default: true
-  //     },
-  //   ])
-    // .then(({role}) => {
-    //     inquirer.prompt(questions,({role:`${role}`}))
-    //       .then( (answers) => {
-    //         console.log(JSON.stringify(answers, null, "  "));
-    //         teamProfile.newTeamMember(answers);
-    //       });
-    //     });
-    // }
+  
   
   function promptManager() {
     return inquirer.prompt(questions,({role:'manager'}))
@@ -202,33 +123,11 @@ const promptAddNextEmployee = () => {
     promptManager().then( (teamData) => {
       promptTeamMember(teamData);
     });
-    //console.log(initTeam);
-    // const newTeamMember = await promptTeamMember();
-    // console.log(newTeamMember);
-  };
-// const teamProfile = new Team();
-// const promptTeamManager = () => {
-//   inquirer.
-//     prompt([...genericQuestions])
-//     // .then( ({}) => }
-//   };
-//const teamProfile = new Team();
-// init();
-init();
-//.then( (teamData) => {
-//    generatePage();
-//  }); 
 
-// init();
-// let currQuestionList = genericQuestions.splice(-1,0,genericQuestions[0]);
-// promptTeam()
-//   .then( (answers) => {
-//     // console.log(answers);
-//     const myTeam = new Team(answers.name,answers.id,answers.email);//Manager(manager_name,id,email,officeNumber);
-//     // console.log(myTeam);
-//     myTeam.initializeTeam();
-//     // this.addNextEmployee();
-// });
+  };
+
+init();
+
 
 
 
