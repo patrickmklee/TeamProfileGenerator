@@ -1,11 +1,9 @@
 // TODO: Include packages needed for this application
-const inquirer = require('inquirer');
 const fs = require('fs');
-
 const Team = require('./lib/Team');
 const generatePage = require('./src/page-template');
 const Manager = require('./lib/Manager');
-
+const inquirer = require('inquirer');
 
 
 //const DIST_HTML_FILENAME = './dist/index.html'
@@ -64,7 +62,13 @@ const questions = [
     when: function(employee) {
       return (employee.role === 'engineer');
     }
-  }
+  },
+  {
+    type: 'confirm',
+    message: 'Add another employee to the team?',
+    name: 'addNextConfirm',
+    default: true
+  },
 ];
       // when: function(employee){
       //    return (employee === 'Engineer');
@@ -138,40 +142,57 @@ const promptAddNextEmployee = () => {
   const teamProfile = new Team();
 
   function promptTeamMember(teamData) {
-    return inquirer.
-    prompt([{
-        type: 'confirm',
-        message: 'Add another employee to the team?',
-        name: 'addNextConfirm',
-        default: true
-      },
-      { type: 'list',
-        name: 'role',
-        message: 'Please select either an Engineer or Intern for your team',
-        choices: ['engineer', 'intern'],
-        //default: []
-        when: function(answers) { return (answers.addNextConfirm===true) }
-      },
-    ])
-    .then(({role}) => {
-      inquirer.prompt(questions,({role:`${role}`}))
+    //debugger;
+    return inquirer
+      .prompt(questions)
         .then( (answers) => {
           console.log(JSON.stringify(answers, null, "  "));
-        });
-      });
-    
-    // return inquirer.prompt(questions).then( ({answers}) => {
-    //   console.log(JSON.stringify(answers, null, "  "));
-      
-    //   // return (new Manager(answers.employeeName,answers.id,answers.email,answers.officeNumber));
-    // })
-  }
+          teamProfile.newTeamMember(answers);
+          if(answers.addNextConfirm) {
+            promptTeamMember(teamData)
+          } else {
+            console.log(teamProfile.getTeamList())
+          }
+        })
+      }
+  //       .then(
+  //         {
+  //           type: 'confirm',
+  //           message: 'Add another employee to the team?',
+  //           name: 'addNextConfirm',
+  //           default: true
+  //         },
+  //       )
+  //     });
+  // }
+  //     [
+  //      { type: 'list',
+  //     name: 'role',
+  //     message: 'Please select either an Engineer or Intern for your team',
+  //     choices: ['engineer', 'intern'],
+  //       },
+  //     {
+  //       type: 'confirm',
+  //       message: 'Add another employee to the team?',
+  //       name: 'addNextConfirm',
+  //       default: true
+  //     },
+  //   ])
+    // .then(({role}) => {
+    //     inquirer.prompt(questions,({role:`${role}`}))
+    //       .then( (answers) => {
+    //         console.log(JSON.stringify(answers, null, "  "));
+    //         teamProfile.newTeamMember(answers);
+    //       });
+    //     });
+    // }
   
   function promptManager() {
     return inquirer.prompt(questions,({role:'manager'}))
       .then( (answers) => {
       console.log(JSON.stringify(answers, null, "  "));
       teamProfile.add(new Manager(answers.employeeName,answers.id,answers.email,answers.officeNumber));
+      debugger;
     });
   }
   function init() {
