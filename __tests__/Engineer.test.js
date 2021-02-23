@@ -1,5 +1,6 @@
-const Engineer = require("../lib/Engineer");
+const Engineer = "../lib/Engineer"
 
+//jest.mock('./Employee'); // SoundPlayer is now a mock constructor
 test('Creates an instance of the Engineer class', () => {
   const engNorm = new Engineer("klaus", 101, '@hotmail.com','www.github.com/klaus2');
   expect(engNorm.name).toEqual(expect.any(String));

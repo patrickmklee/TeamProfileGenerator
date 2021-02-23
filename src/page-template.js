@@ -14,7 +14,7 @@ const generateAbout = aboutText => {
 const generateTeamManager = manager => {
   return `
     <section class="my-3" id="portfolio">
-    ${manager.map(({name,id,email,officeNumber}) => {
+    ${manager.filter(({name,id,email,officeNumber}) => {
         return `
       <h2 class="text-dark bg-primary p-2 display-inline-block">${officeNumber}</h2>
       <div class="flex-row justify-space-between">
@@ -31,33 +31,77 @@ const generateTeamManager = manager => {
       `};
       
 // create the projects section
-const generateTeamMembers = employees => {
+const generateTeamMembers = employeeArr => {
+  console.log(employeeArr.employees)
   return `
-      ${employees
-        .filter(({ role }) => role)
-        .map(({ name, id, email, ... details}) => {
-          console.log(languages);
+    <section class="my-3" id="portfolio">
+    ${employeeArr.filter( (employee) => { return employee.getRole() === 'Manager'} )
+    .map( employee => {
           return `
-          <div class="col-12 col-md-6 mb-2 bg-dark text-light p-3 flex-column">
-            <h3 class="portfolio-item-title text-light">${name}</h3>
-            <h5 class="portfolio-languages">Role: ${role}</h5>
-            <p>Email: ${email}</p>
-            <a>class="btn mt-auto"><i class="fab fa-github mr-2"></i>Details: ${details}</a>
-          </div>
-        `;
+          <h2 class="text-dark bg-primary p-2 display-inline-block">${employee.getName()}</h2>
+          <div class="flex-row justify-space-between">
+            <div class="col-12 mb-2 bg-dark text-light p-3">
+              <p>ID#${employee.getId()}</p>
+              <h3 class="portfolio-item-title text-light">${employee.getName()}</h3>
+              <h5 class="portfolio-languages">${employee.getRole()}</h5>
+              <span class="text-secondary"><a href="mailto:">${employee.getEmail()}</a></span>
+            </div>
+            `;
         })
         .join('')}
-    
+        <div class="col-12 col-md-6 text-light flex-column">
+        ${employeeArr
+        .filter( employee => {return employee.getRole() === 'Engineer'})
+        .map( engineer => { 
+          return `
+          <div class="card mt-2">
+            <div class="card-header">
+              <h3 class="portfolio-item-title text-light">${engineer.getName()}</h3>
+              <p class="portfolio-item-body text-light"><a href="mailto:"><span class="text-secondary">${engineer.getEmail()}</span></a></p>
+            </div>
+            <div class="card-body">
+              <h5 class="portfolio-languages">${engineer.getRole()}</h5>
+              <a class="btn mt-auto" href=www.github.com/${engineer.getGithub()}><i class="fab fa-github mr-2"></i></a>
+              <p><span>ID #${engineer.getId()}</span></p>
+            </div>
+          </div>
+          `;
+        })
+        .join('')}
+        </div>
+        <div class="col-12 col-md-6 mb-2 text-light flex-column">
+        ${employeeArr
+          .filter( employee => {return employee.getRole() === 'Intern'})
+          .map( intern => {
+            return `
+            <div class="card p-3">
+              <div class="card-header">
+                <h3 class= "portfolio-item-title text-light">${intern.getName()}</h3>
+                <p class = "portfolio-item-body text-light"><a href="mailto:"><span class="text-secondary">${intern.getEmail()}</span></a></p>                
+              </div>
+              <div class="card-body">
+                <h5 class="portfolio-languages">${intern.getRole()}</h5>
+                <p class="portfolio-item-text text-light">${intern.getSchool()}</p>
+                <p><span>ID: #${intern.getId()}</span></p>
+              </div>
+            </div>
+            `;
+          })
+          .join('')}
+          </div>
       </div>
     </section>
   `;
 };
-
+            
 // export function to generate entire page
 module.exports = templateData => {
   // destructure page data by section
-  const {employees, ...header } = templateData;
-
+  //const employees = teamplateData.getEmployees
+  console.log("Template Data HERE")
+  console.log(templateData)
+  //const manager = templateData.manager
+  const {employees}= templateData;
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -75,19 +119,18 @@ module.exports = templateData => {
   <body>
     <header>
       <div class="container flex-row justify-space-between align-center py-3">
-        <h1 class="page-title text-secondary bg-dark py-2 px-3">${header.name}</h1>
-
+      <h1 class="page-title text-secondary bg-dark py-2 px-3">Office #${employees.find( (employee) => {return employee.getRole() === 'Manager'}).getOfficeNumber()}</h1> 
       </div>
     </header>
     <main class="container my-5">
-      ${generateTeamManager(employees)}
-      
+      ${generateTeamMembers(employees)}
     </main>
     <footer class="container text-center py-3">
-      <h3 class="text-dark">&copy;2020 by ${header.name}</h3>
     </footer>
   </body>
   </html>
   `;
 };
+// ${manager.role} : ${manager.email}
 //${generateAbout(about)}
+//     <h3 class="text-dark">&copy;2020 by ${header.name}</h3>
