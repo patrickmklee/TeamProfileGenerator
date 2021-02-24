@@ -1,6 +1,8 @@
 const Employee = require('../lib/Employee');
 test('creates a employee object', () => {
-    let answers = {'name': 'Generic Guy',id:124,email: 'worker@drone.com'}
+    let answers = {name:'Generic Guy',
+    id:124,
+    email: 'worker@drone.com'}
   const employeeDef = new Employee(answers.name,answers.id,answers.email);
   expect(employeeDef.getEmail()).toEqual(answers.email)
   expect(employeeDef.getName()).toEqual(expect.any(String));
