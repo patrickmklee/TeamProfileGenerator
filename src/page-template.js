@@ -18,7 +18,7 @@ const generateTeamManager = manager => {
         <div class="col-12 mb-2 bg-dark text-light p-3">
           <h3 class="portfolio-item-title text-light">${manager.getName()}</h3>
           <h5 class="portfolio-languages">${manager.getRole()}</h5>
-          <p class="portfolio-item-body text-light"><a href="mailto:"><span class="text-secondary">${manager.getEmail()}</span></a></p>
+          <p class="portfolio-item-body text-light"><a href="mailto:${manager.getEmail()}"><span class="text-secondary">${manager.getEmail()}</span></a></p>
           <p><span class="text-right">ID #${manager.getId()}</span></p>
         </div>
       </div>
@@ -45,9 +45,9 @@ const generateTeamMembers = employeeArr => {
               <div class="card-header pb-0">${engineer.getRole()}</div>
               <div class="card-body">
                 <h3 class="text-light">${engineer.getName()}</h3>
-                <a href="mailto:" class="text-secondary">${engineer.getEmail()}</a>
+                <a href="mailto:${engineer.getEmail()}" class="text-secondary">${engineer.getEmail()}</a>
                 <p class="portfolio-languages">ID: #${engineer.getId()}</p>
-                <a class="btn ml-2" href="http://www.github.com/${engineer.getGithub()}"><i class="fab fa-github mb-2"></i></a>
+                <a class="btn ml-2" href="http://www.github.com/${engineer.getGithub()}" target="_blank"><i class="fab fa-github mb-2"></i></a>
               </div>
             </div>
           </div>
@@ -65,7 +65,7 @@ const generateTeamMembers = employeeArr => {
               <div class="card-header pb-0">${intern.getRole()}</div>
                 <div class="card-body">
                   <h3 class= "text-light">${intern.getName()}</h3>
-                  <a href="mailto:" class="text-secondary">${intern.getEmail()}</a>
+                  <a href="mailto:${intern.getEmail()}" class="text-secondary">${intern.getEmail()}</a>
                   <p class="portfolio-languages">ID: #${intern.getId()}</p>
                   <p class="text-light">${intern.getSchool()}</p> 
                 </div>
@@ -83,11 +83,6 @@ const generateTeamMembers = employeeArr => {
             
 // export function to generate entire pages
 module.exports = templateData => {
-  // destructure page data by section
-  //const employees = teamplateData.getEmployees
-  console.log("Template Data HERE")
-  console.log(templateData)
-  //const manager = templateData.manager
   const {employees, manager}= templateData;
   return `
   <!DOCTYPE html>
@@ -97,7 +92,7 @@ module.exports = templateData => {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Portfolio Demo</title>
+    <title>Team Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Public+Sans:300i,300,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -120,7 +115,3 @@ module.exports = templateData => {
   </html>
   `;
 };
-// ${manager.role} : ${manager.email}
-// {/* <h1 class="page-title text-secondary bg-dark py-2 px-3">${manager.getName()}'s Team
-//       ${employees.find( (employee) => {return employee.getRole() === 'Manager'}).getOfficeNumber()}
-//       </h1>  */}
