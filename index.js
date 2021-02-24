@@ -122,7 +122,7 @@ const questions = [
     }
 ];
 
-function buildEmployee(role, info) {
+const buildEmployee = function(role, info) {
     switch(role) {
         case 'engineer' : 
             return new Engineer(info.name,info.id,info.email,info.github)
@@ -160,22 +160,22 @@ async function promptLoop(employeeArray) {
     }
 }
 async function start () {
-    var employeeArray = {
-        employees: []
-    };
+
     
     console.log("## TeamProfileGenerator ##");
     console.log("##########################");
     console.log("To begin, we need some information about the Team Manager (you)")
     
     let {role,action,...rest} =  await getInput('manager');
-    let manager = buildEmployee(role, rest);
-    employeeArray.employees.push(manager); 
-    
+    let employeeArray = {
+        manager:  buildEmployee(role, rest),
+        employees: []
+    };
+        
     if ( action===true ) {
         try {
             let promptArray = await promptLoop(employeeArray);
-            console.log(promptArray);
+            console.log(promptArray)
             let allPromises = await Promise.all([promptArray]);
             console.log(allPromises);
         } catch(error) {
@@ -184,9 +184,8 @@ async function start () {
     }
     return employeeArray
 }
-   
 function buildWebpage(templateData) {
-    console.log(`BUILD WEBPAGE: ${templateData}`)
+    console.log(`BUILD WEBPAGE: ${templateData}`);
     writeFile(generatePage(templateData))
 }
 
